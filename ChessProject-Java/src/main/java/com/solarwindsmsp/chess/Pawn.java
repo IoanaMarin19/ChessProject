@@ -39,13 +39,27 @@ public class Pawn {
         return this.pieceColor;
     }
 
-    private void setPieceColor(PieceColor value) {
+    public void setPieceColor(PieceColor value) {
         pieceColor = value;
     }
 
     public void Move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (isBlackPawnMove(movementType, newX, newY) || isWhitePawnMove(movementType, newX, newY)) {
+            setYCoordinate(newY);
+        }
     }
+
+    private boolean isWhitePawnMove(MovementType movementType, int newX, int newY) {
+        return MovementType.MOVE.equals(movementType) && PieceColor.WHITE.equals(getPieceColor()) && ((getYCoordinate() + 1) == newY)
+                && (getXCoordinate() == newX);
+    }
+
+
+    private boolean isBlackPawnMove(MovementType movementType, int newX, int newY) {
+        return MovementType.MOVE.equals(movementType) && PieceColor.BLACK.equals(getPieceColor())
+                && ((getYCoordinate() - 1) == newY) && (getXCoordinate() == newX);
+    }
+
 
     @Override
     public String toString() {

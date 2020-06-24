@@ -13,10 +13,30 @@ public class ChessBoard {
     }
 
     public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.add()");
+        if (IsLegalBoardPosition(xCoordinate, yCoordinate) && isLegalPawnPosition(xCoordinate, yCoordinate, pieceColor)) {
+            pawn.setChessBoard(this);
+            pawn.setXCoordinate(xCoordinate);
+            pawn.setYCoordinate(yCoordinate);
+            pawn.setPieceColor(pieceColor);
+        }
+        else {
+            pawn.setXCoordinate(-1);
+            pawn.setYCoordinate(-1);
+        }
+    }
+    private boolean isLegalPawnPosition(int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+        return (isLegalPositionForBlackPawn(xCoordinate, yCoordinate, pieceColor)
+                || isLegalPositionforWhitePawn(xCoordinate, yCoordinate, pieceColor));
     }
 
+    private boolean isLegalPositionforWhitePawn(int xCoordinate,  int yCoordinate, PieceColor pieceColor) {
+        return (pieceColor.equals(PieceColor.WHITE)) && (xCoordinate == 1) && ((yCoordinate >= 0) && (yCoordinate < 8));
+    }
+
+    private boolean isLegalPositionForBlackPawn(int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+        return pieceColor.equals(PieceColor.BLACK) && (xCoordinate == 6) && ((yCoordinate >= 0) && (yCoordinate < 8));
+    }
     public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.IsLegalBoardPosition()");
+        return ((xCoordinate >= 0) && (xCoordinate <= 7) && (yCoordinate >= 0) && (yCoordinate <= 7)) ;
     }
 }
